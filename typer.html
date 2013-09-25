@@ -6,7 +6,7 @@
     </style>
     <script type="text/javascript">
       var myOptions = {
-	  "defCharDelay": 1000,
+	  "defCharDelay": 100,
 	  "outputPlace": "outputBox",
 	  "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n",};
 
@@ -22,7 +22,9 @@
 	      } else {
 		  nelem = document.createTextNode( cur );
 	      }
-	      setTimeout( function() { elem.appendChild( nelem ); }, cto );
+	      (function (cto, nelem ) {
+	        setTimeout( function() { elem.appendChild( nelem ); }, cto );
+	      })(cto, nelem);
 	  }
       };
     </script>
