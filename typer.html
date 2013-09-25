@@ -5,19 +5,20 @@
     <style type="text/css">
     </style>
     <script type="text/javascript">
-      var myOptions = {
+ (function(){
+"use strict";
+     var myOptions = {
 	  "defCharDelay": 1000,
 	  "outputPlace": "outputBox",
-	  "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n",};
-
-      function startOutput(e) {
-	  var work = myOptions['outputText'].split("");
-	  for( i = 0; i < work.length; i++ ) {
-	      elem = document.getElementById( myOptions['outputPlace'] );
-	      cto = i*myOptions['defCharDelay'];
+	  "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n"
+}, startOutput = function () {
+          var i, elem, cto, cur, nelem, work = myOptions.outputText.split("");
+	  for( i = 0; i < work.length; i = i + 1) {
+	      elem = document.getElementById( myOptions.outputPlace );
+	      cto = i*myOptions.defCharDelay;
 	      cur = work[i];
 	      nelem = '';
-	      if( cur == '\n' ) {
+	      if( cur === '\n' ) {
 		  nelem = document.createElement( 'br' );
 	      } else {
 		  nelem = document.createTextNode( cur );
@@ -25,16 +26,16 @@
 	      setTimeout( function() { elem.appendChild( nelem ); }, cto );
 	  }
       };
-    </script>
-    <script type="text/javascript">
-      if( document.addEventListener ) { // IE9+, other DOM3 compliant browsers
+   if( document.addEventListener ) { // IE9+, other DOM3 compliant browsers
 	  document.addEventListener('load', startOutput, true);
       } else if( document.attachEvent ) { // pre-IE9 MS browsers
 	  document.attachEvent( 'onload', startOutput );
       } else { // ancient browsers
 	  window.onload = function () { startOutput(); };
       }
+}());
     </script>
+
   </head>
   <body>
     <div id="outputBox">
