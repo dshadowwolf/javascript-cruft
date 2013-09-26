@@ -12,32 +12,24 @@
             "outputPlace": "outputBox",
             "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n"
         },
+		outChar = function (e,i) {
+		    var el = document.getElementById(myOptions.outputPlace), node;
+			if (e == '\n') {
+				node = document.createElement('br');
+			} else {
+				node = document.createTextNode(e);
+			}
+			setTimeout(function () { el.appendChild(node) }, 100+(100*i));
+		},
         startOutput = function () {
             var i, elem, cto, cur, nelem, work = myOptions.outputText.split("");
             elem = document.getElementById(myOptions.outputPlace);
             if (!elem) {
                 throw "NO ELEMENT NO WORKY";
             }
-            for (i = 0; i < work.length; i = i + 1) {
-                cto = i * myOptions.defCharDelay;
-                cur = work[i];
-                if (cur === '\n') {
-                    nelem = document.createElement('br');
-                } else {
-                    nelem = document.createTextNode(cur);
-                }
-                (function (cto, nelem) {
-                    setTimeout(function () { elem.appendChild(nelem); }, cto);
-                }(cto, nelem));
-            }
+			work.forEach(outChar);
         };
-    if (document.addEventListener) { // IE9+, other DOM3 compliant browsers
-        document.addEventListener('load', startOutput, true);
-    } else if (document.attachEvent) { // pre-IE9 MS browsers
-        document.attachEvent('onload', startOutput);
-    } else { // ancient browsers
-        window.onload = function () { startOutput(); };
-    }
+    document.addEventListener('load', startOutput, true);
 }());</script>
   </head>
   <body>
