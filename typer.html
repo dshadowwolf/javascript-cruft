@@ -12,22 +12,18 @@
             "outputPlace": "outputBox",
             "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n"
         },
-		outChar = function (e,i) {
-		    var el = document.getElementById(myOptions.outputPlace), node;
-			if (e == '\n') {
-				node = document.createElement('br');
-			} else {
-				node = document.createTextNode(e);
-			}
-			setTimeout(function () { el.appendChild(node) }, 100+(100*i));
-		},
-        startOutput = function () {
-            var i, elem, cto, cur, nelem, work = myOptions.outputText.split("");
-            elem = document.getElementById(myOptions.outputPlace);
-            if (!elem) {
-                throw "NO ELEMENT NO WORKY";
+        outChar = function (e, i) {
+            var el = document.getElementById(myOptions.outputPlace), node;
+            if (e === '\n') {
+                node = document.createElement('br');
+            } else {
+                node = document.createTextNode(e);
             }
-			work.forEach(outChar);
+            setTimeout(function () { el.appendChild(node); }, 100 + (100 * i));
+        },
+        startOutput = function () {
+            var work = myOptions.outputText.split("");
+            work.forEach(outChar);
         };
     document.addEventListener('load', startOutput, true);
 }());</script>
