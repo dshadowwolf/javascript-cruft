@@ -5,39 +5,40 @@
     <style type="text/css">
     </style>
     <script type="text/javascript">
- (function(){
-"use strict";
-     var myOptions = {
-    "defCharDelay": 100,
-    "outputPlace": "outputBox",
-    "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n"
-}, startOutput = function () {
-          var i, elem, cto, cur, nelem, work = myOptions.outputText.split("");
-    elem = document.getElementById( myOptions.outputPlace );
-if (! elem) throw "NO ELEMENT NO WORKY";
-    for( i = 0; i < work.length; i = i + 1) {
-        cto = i*myOptions.defCharDelay;
-        cur = work[i];
-      var nelem;
-        if( cur === '\n' ) {
-      nelem = document.createElement( 'br' );
-        } else {
-      nelem = document.createTextNode( cur );
-        }
-(function (cto, nelem) {
-        setTimeout( function() { elem.appendChild( nelem ); }, cto );
-}(cto, nelem));
+(function () {
+    "use strict";
+    var myOptions = {
+            "defCharDelay": 100,
+            "outputPlace": "outputBox",
+            "outputText": "Twas brillig, and the slithy toves\nDid gyre and gimble in the wabe;\nAll mimsy were the borogoves,\nAnd the mome raths outgrabe.\n"
+        },
+        startOutput = function () {
+            var i, elem, cto, cur, nelem, work = myOptions.outputText.split("");
+            elem = document.getElementById(myOptions.outputPlace);
+            if (!elem) {
+                throw "NO ELEMENT NO WORKY";
+            }
+            for (i = 0; i < work.length; i = i + 1) {
+                cto = i * myOptions.defCharDelay;
+                cur = work[i];
+                if (cur === '\n') {
+                    nelem = document.createElement('br');
+                } else {
+                    nelem = document.createTextNode(cur);
+                }
+                (function (cto, nelem) {
+                    setTimeout(function () { elem.appendChild(nelem); }, cto);
+                }(cto, nelem));
+            }
+        };
+    if (document.addEventListener) { // IE9+, other DOM3 compliant browsers
+        document.addEventListener('load', startOutput, true);
+    } else if (document.attachEvent) { // pre-IE9 MS browsers
+        document.attachEvent('onload', startOutput);
+    } else { // ancient browsers
+        window.onload = function () { startOutput(); };
     }
-   };
-   if( document.addEventListener ) { // IE9+, other DOM3 compliant browsers
-    document.addEventListener('load', startOutput, true);
-      } else if( document.attachEvent ) { // pre-IE9 MS browsers
-	  document.attachEvent( 'onload', startOutput );
-      } else { // ancient browsers
-	  window.onload = function () { startOutput(); };
-      } 
-	  })();
-    </script>
+}());</script>
   </head>
   <body>
     <div id="outputBox">
