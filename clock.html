@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A Clock</title>
+    <style type="text/css">
+      #wrapper {
+	width: 300px;
+        margin: 0px auto;
+	margin-top: 200px;
+      }
+    </style>
+    <script type="text/javascript">
+      var canv, ctx, notfirst=false;
+      
+      function my_init() {
+	  canv = document.getElementById("theCanvas");
+	  ctx = canv.getContext('2d');
+	  
+	  ctx.clearRect(0,0,300,300);
+	  draw_clockface();
+	  draw_curtime();
+	  notfirst = true;
+	  setTimeout( redraw, 1000 );
+      }
+      
+      function redraw() {
+	  draw_clockface();
+	  draw_curtime();
+	  setTimeout( redraw, 1000 );
+      }
+
+      function draw_clockface() {
+	  if( notfirst )
+	    ctx.translate( -150, -150 );
+
+	  ctx.clearRect(0,0,300,300);
+	  ctx.translate(150,150);
+	  for( i=1; i<=60;i++) {
+	      ang=Math.PI/30*i;
+	      sang=Math.sin(ang);
+	      cang=Math.cos(ang);
+	      if( i%5 ==0 ) {
+		  ctx.lineWidth=8;
+		  nx=sang*95;
+		  ny=cang*-95;
+		  ctx.fillText(i/5,nx,ny);
+	      } else {
+		  ctx.lineWidth=2;
+	      }
+	      sx=sang*110;
+	      sy=cang*110;
+	      ex=sang*120;
+	      ey=cang*120;
+	      ctx.beginPath();
+	      ctx.moveTo(sx,sy);
+	      ctx.lineTo(ex,ey);
+	      ctx.stroke();
+	  }
+      }
+
+      function draw_curtime() {
+	  var now=new Date();
+	  var hours=now.getHours();
+	  var mins=now.getMinutes();
+	  var sec=now.getSeconds();
+	  ctx.strokeStyle="#333";
+	  ctx.lineWidth=6;
+	  ctx.save();
+	  ctx.rotate(Math.PI/6*(hours+(mins/60)+(sec/3600)));
+          ctx.beginPath();
+          ctx.moveTo(0,10);
+          ctx.lineTo(0,-60);
+          ctx.stroke();
+          ctx.restore();
+          ctx.save();
+          ctx.rotate(Math.PI/30*(mins+(sec/60)));
+          ctx.beginPath();
+          ctx.moveTo(0,20);
+          ctx.lineTo(0,-110);
+          ctx.stroke();
+          ctx.restore();
+          ctx.save();
+          ctx.rotate(Math.PI/30*sec);
+          ctx.strokeStyle="#E33";
+          ctx.beginPath();
+          ctx.moveTo(0,20);
+          ctx.lineTo(0,-110);
+          ctx.stroke();
+          ctx.restore();
+    }
+    </script>
+    <script type="text/javascript">
+      document.addEventListener('load', my_init, true );
+    </script>
+  </head>
+  <body>
+    <div id="wrapper">
+      <canvas id="theCanvas" height="300" width="300">
+      </canvas>
+    </div>
+  </body>
+</html>
